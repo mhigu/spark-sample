@@ -1,0 +1,6 @@
+.ensime
+
+src/main/resorces/data/*
+.ensime_cache/*
+target/*
+project/*
