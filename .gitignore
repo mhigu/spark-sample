@@ -2,5 +2,6 @@
 
 src/main/resorces/data/*
 .ensime_cache/*
+.idea/*
 target/*
 project/*
