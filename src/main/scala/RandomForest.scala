@@ -1,7 +1,6 @@
 import org.apache.spark.mllib.linalg._
 import org.apache.spark.mllib.regression._
 import org.apache.spark.SparkContext
-import org.apache.spark.SparkContext._
 import org.apache.spark.SparkConf
 
 
@@ -45,7 +44,7 @@ object RandomForest{
     val metrics = getMetrics(model, cvData)
 
     println(metrics.confusionMatrix)
-    println(metrics.precision)
+    println(metrics.accuracy)
 
     println("########################")
     (0 until 7).map(
@@ -73,15 +72,15 @@ object RandomForest{
         val predictionsAndLabels = cvData.map(example =>
           (model.predict(example.features), example.label)
         )
-        val accuracy = new MulticlassMetrics(predictionsAndLabels).precision
+        val accuracy = new MulticlassMetrics(predictionsAndLabels).accuracy
         ((impurity, depth, bins), accuracy)
       }
 
     println("@@@@@@@@@@@@@@@@@@@@@@@")
     evaluations.sortBy(_._2).reverse.foreach(println)
 
-    val model_2 = DecisionTree.trainClassifier(
-      trainData.union(cvData), 7, Map[Int,Int](), "entropy", 20, 300)
+//    val model2 = DecisionTree.trainClassifier(
+//      trainData.union(cvData), 7, Map[Int,Int](), "entropy", 20, 300)
 
   }
 

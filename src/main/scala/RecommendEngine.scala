@@ -1,10 +1,8 @@
 import org.apache.spark.SparkContext
-import org.apache.spark.SparkContext._
 import org.apache.spark.SparkConf
-import org.apache.log4j.{Level, Logger}
 import org.apache.spark.mllib.recommendation._
 
-object SimpleApp{
+object RecommendEngine{
   def main(args: Array[String]){
 
     // initialization
@@ -76,18 +74,15 @@ object SimpleApp{
     println("User 2093760 Artists =========== ")
     artistByID.filter{ case (id, name) => existingProducts.contains(id)}.values.collect.foreach(println)
 
-    val recommentations = model.recommendProducts(2093760, 5)
-    recommentations.foreach(println)
+    val recommendations = model.recommendProducts(2093760, 5)
+    recommendations.foreach(println)
 
-    val recommendedProductIDs = recommentations.map(_.product).toSet
+    val recommendedProductIDs = recommendations.map(_.product).toSet
 
     println("Recommended Artists for User 2093760")
     artistByID.filter { case (id, name) =>
       recommendedProductIDs.contains(id)
     }.values.collect.foreach(println)
-
-    
-
 
   }
 }

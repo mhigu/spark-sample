@@ -2,7 +2,7 @@ import org.apache.spark.SparkConf
 import org.apache.spark.SparkContext
 
 object LSA{
-  def main(args: Arrayp[String]){
+  def main(args: Array[String]){
     val conf = new SparkConf().setAppName("LSA").setMaster("local")
     val sc = new SparkContext(conf)
      

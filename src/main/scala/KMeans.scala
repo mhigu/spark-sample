@@ -1,5 +1,4 @@
 import org.apache.spark.SparkContext
-import org.apache.spark.SparkContext._
 import org.apache.spark.SparkConf
 import org.apache.spark.mllib.linalg._
 import org.apache.spark.mllib.clustering._
@@ -60,7 +59,7 @@ object KMeans{
 
     def normalize(datum: Vector) = {
       val normalizedArray = (datum.toArray, means, stdevs).zipped.map(
-        (value, mean, stdev) => if (stdev<=0) (value -mean) else (value - mean) / stdev
+        (value, mean, stdev) => if (stdev<=0) value - mean else (value - mean) / stdev
       )
       Vectors.dense(normalizedArray)
     }
@@ -76,7 +75,7 @@ object KMeans{
 
   def distance(a: Vector, b: Vector) = math.sqrt(a.toArray.zip(b.toArray).map(p => p._1 - p._2).map(d=> d * d).sum)
 
-  def distToCentriod(datum: Vector, model: KMeansModel) = {
+  def distToCentroid(datum: Vector, model: KMeansModel) = {
     val cluster = model.predict(datum)
     val centroid = model.clusterCenters(cluster)
     distance(centroid, datum)
@@ -88,7 +87,7 @@ object KMeans{
     kmeans.setRuns(10)
     kmeans.setEpsilon(1.0e-4)
     val model = kmeans.run(data)
-    data.map(datum => distToCentriod(datum, model)).mean()
+    data.map(datum => distToCentroid(datum, model)).mean()
   }
 
 
